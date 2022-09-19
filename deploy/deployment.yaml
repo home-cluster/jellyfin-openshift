@@ -42,6 +42,13 @@ spec:
         - mountPath: /config
           name: jellyfin-config
       restartPolicy: Always
+      initContainers:
+       - name: jellyfin-data-permission-fix
+         image: busybox
+         command: ["/bin/chmod","-R","777", "/config"]
+         volumeMounts:
+         - mountPath: /config
+           name: jellyfin-config
       volumes:
       - name: media
         persistentVolumeClaim:
